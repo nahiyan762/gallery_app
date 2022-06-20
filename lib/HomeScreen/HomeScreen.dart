@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:gallery_app/widget/text_widget.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -16,7 +17,7 @@ class HomeScreen extends StatelessWidget {
         ),
         body: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.only(left: 16, right: 16),
+            padding: EdgeInsets.only(left: 16, right: 16),
             child: Column(
               children: [
                 TextField(
@@ -30,14 +31,22 @@ class HomeScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(0.6))),
                 ),
                 Expanded(
-                    child: ListView.builder(
-                      itemCount: 5,
-                      itemBuilder: (context, index) {
-                        return ListTile(
-                          leading: Text('hello')
-                        );
-                      },
-                    ))
+                  child: GridView.custom(
+                    gridDelegate: SliverStairedGridDelegate(
+                      crossAxisSpacing: 48,
+                      mainAxisSpacing: 24,
+                      startCrossAxisDirectionReversed: true,
+                      pattern: [
+                        StairedGridTile(0.5, 1),
+                        StairedGridTile(0.5, 3 / 4),
+                        StairedGridTile(1.0, 10 / 4),
+                      ],
+                    ),
+                    childrenDelegate: SliverChildBuilderDelegate(
+                          (context, index) => Text('Hello'),
+                    ),
+                  ),
+                )
               ],
             ),
           ),
