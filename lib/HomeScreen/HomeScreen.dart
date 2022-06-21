@@ -2,10 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:gallery_app/widget/text_widget.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   static String routeName = "/home";
 
-  const HomeScreen({Key? key}) : super(key: key);
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  List img = [
+    "https://images.unsplash.com/photo-1655578111000-a0b500b70e93?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDF8QkpKTXR0ZURKQTR8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=60",
+    "https://images.unsplash.com/photo-1655578111000-a0b500b70e93?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDF8QkpKTXR0ZURKQTR8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=60",
+    "https://images.unsplash.com/photo-1655578111000-a0b500b70e93?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDF8QkpKTXR0ZURKQTR8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=60",
+    "https://images.unsplash.com/photo-1655578111000-a0b500b70e93?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDF8QkpKTXR0ZURKQTR8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=60",
+    "https://images.unsplash.com/photo-1655578111000-a0b500b70e93?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDF8QkpKTXR0ZURKQTR8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=60",
+    "https://images.unsplash.com/photo-1655578111000-a0b500b70e93?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDF8QkpKTXR0ZURKQTR8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=60",
+    "https://images.unsplash.com/photo-1655578111000-a0b500b70e93?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDF8QkpKTXR0ZURKQTR8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=60",
+    "https://images.unsplash.com/photo-1655578111000-a0b500b70e93?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDF8QkpKTXR0ZURKQTR8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=60",
+    "https://images.unsplash.com/photo-1655578111000-a0b500b70e93?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDF8QkpKTXR0ZURKQTR8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=60"
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -16,40 +31,53 @@ class HomeScreen extends StatelessWidget {
               child: titleTextH1(context, "Gallery App")),
         ),
         body: SafeArea(
-          child: Padding(
-            padding: EdgeInsets.only(left: 16, right: 16),
-            child: Column(
-              children: [
-                TextField(
-                  decoration: InputDecoration(
-                      prefixIcon:
-                          const Icon(Icons.search_rounded, color: Colors.black),
-                      hintText: 'Search',
-                      contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                      isDense: true,
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(0.6))),
-                ),
-                Expanded(
-                  child: GridView.custom(
-                    gridDelegate: SliverStairedGridDelegate(
-                      crossAxisSpacing: 48,
-                      mainAxisSpacing: 24,
-                      startCrossAxisDirectionReversed: true,
-                      pattern: [
-                        StairedGridTile(0.5, 1),
-                        StairedGridTile(0.5, 3 / 4),
-                        StairedGridTile(1.0, 10 / 4),
-                      ],
-                    ),
-                    childrenDelegate: SliverChildBuilderDelegate(
-                          (context, index) => Text('Hello'),
+            child: Padding(
+                padding: EdgeInsets.only(left: 16, right: 16),
+                child: Column(children: [
+                  TextField(
+                    decoration: InputDecoration(
+                        prefixIcon: const Icon(Icons.search_rounded,
+                            color: Colors.black),
+                        hintText: 'Search',
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 8, horizontal: 8),
+                        isDense: true,
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(0.6))),
+                  ),
+                  Expanded(
+                    child: GridView.custom(
+                      gridDelegate: SliverWovenGridDelegate.count(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 8,
+                        crossAxisSpacing: 8,
+                        pattern: const [
+                           WovenGridTile(1),
+                          WovenGridTile(5 / 7,
+                            crossAxisRatio: 0.9,
+                            alignment: AlignmentDirectional.centerEnd,
+                          ),
+                        ],
+                      ),
+                      childrenDelegate: SliverChildBuilderDelegate(
+
+                        (context, index) {
+                          return Container(
+                            decoration: BoxDecoration(
+                                color: Colors.transparent,
+                                borderRadius: BorderRadius.circular(8.0)),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(8.0),
+                              child: Image.network(
+                                img[index],
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
                     ),
                   ),
-                )
-              ],
-            ),
-          ),
-        ));
+                ]))));
   }
 }
